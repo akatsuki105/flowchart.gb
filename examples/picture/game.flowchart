@@ -1,0 +1,272 @@
+--------------------------------------------------------------------
+[bank_000.asm]
+st=>start: Start
+Jump_000_0150=>operation:  Jump_000_0150
+    jp Jump_000_028b
+
+Jump_000_028b=>operation:  Jump_000_028b
+    xor a
+    ld hl, $dfff
+    ld c, $10
+    ld b, $00
+
+
+jr_000_0293=>parallel:  jr_000_0293
+    ld [hl-], a
+    dec b
+    jr nz, jr_000_0293
+
+jr_000_0293'=>parallel:  jr_000_0293
+
+    dec c
+    jr nz, jr_000_0293
+
+jr_000_0293''=>operation:  jr_000_0293
+
+
+Jump_000_029a=>operation:  Jump_000_029a
+    ld a, $01
+    di
+    ldh [rIF], a
+    ldh [rIE], a
+    xor a
+    ldh [rSCY], a
+    ldh [rSCX], a
+    ldh [$a4], a
+    ldh [rSTAT], a
+    ldh [rSB], a
+    ldh [rSC], a
+    ld a, $80
+    ldh [rLCDC], a
+
+
+jr_000_02b2=>parallel:  jr_000_02b2
+    ldh a, [rLY]
+    cp $94
+    jr nz, jr_000_02b2
+
+jr_000_02b2'=>operation:  jr_000_02b2
+
+    ld a, $03
+    ldh [rLCDC], a
+    ld a, $e4
+    ldh [rBGP], a
+    ldh [rOBP0], a
+    ld a, $c4
+    ldh [rOBP1], a
+    ld hl, $ff26
+    ld a, $80
+    ld [hl-], a
+    ld a, $ff
+    ld [hl-], a
+    ld [hl], $77
+    ld a, $01
+    ld [$2000], a
+    ld sp, $cfff
+    xor a
+    ld hl, $dfff
+    ld b, $00
+
+
+jr_000_02df=>parallel:  jr_000_02df
+    ld [hl-], a
+    dec b
+    jr nz, jr_000_02df
+
+jr_000_02df'=>operation:  jr_000_02df
+
+    ld hl, $cfff
+    ld c, $10
+    ld b, $00
+
+
+jr_000_02ea=>parallel:  jr_000_02ea
+    ld [hl-], a
+    dec b
+    jr nz, jr_000_02ea
+
+jr_000_02ea'=>parallel:  jr_000_02ea
+
+    dec c
+    jr nz, jr_000_02ea
+
+jr_000_02ea''=>operation:  jr_000_02ea
+
+    ld hl, $9fff
+    ld c, $20
+    xor a
+    ld b, $00
+
+
+jr_000_02f9=>parallel:  jr_000_02f9
+    ld [hl-], a
+    dec b
+    jr nz, jr_000_02f9
+
+jr_000_02f9'=>parallel:  jr_000_02f9
+
+    dec c
+    jr nz, jr_000_02f9
+
+jr_000_02f9''=>operation:  jr_000_02f9
+
+    ld hl, $feff
+    ld b, $00
+
+
+jr_000_0305=>parallel:  jr_000_0305
+    ld [hl-], a
+    dec b
+    jr nz, jr_000_0305
+
+jr_000_0305'=>operation:  jr_000_0305
+
+    ld hl, $fffe
+    ld b, $80
+
+
+jr_000_030e=>parallel:  jr_000_030e
+    ld [hl-], a
+    dec b
+    jr nz, jr_000_030e
+
+jr_000_030e'=>operation:  jr_000_030e
+
+    ld c, $b6
+    ld b, $0c
+    ld hl, $2ac7
+
+
+jr_000_0319=>parallel:  jr_000_0319
+    ld a, [hl+]
+    ld [c], a
+    inc c
+    dec b
+    jr nz, jr_000_0319
+
+jr_000_0319'=>operation:  jr_000_0319
+
+    call $27e9
+    call $7ff3
+    ld a, $09
+    ldh [rIE], a
+    ld a, $37
+    ldh [$c0], a
+    ld a, $1c
+    ldh [$c1], a
+    ld a, $24
+    ldh [$e1], a
+    ld a, $80
+    ldh [rLCDC], a
+    ei
+    xor a
+    ldh [rIF], a
+    ldh [rWY], a
+    ldh [rWX], a
+    ldh [rTMA], a
+
+
+Jump_000_0343=>parallel:  Jump_000_0343
+    call Call_000_29fa
+    call Call_000_0377
+    call $7ff0
+    ldh a, [$80]
+    and $0f
+    cp $0f
+    jp z, Jump_000_029a
+
+Jump_000_0343'=>operation:  Jump_000_029a
+
+    ld hl, $ffa6
+    ld b, $02
+
+
+jr_000_035a=>parallel:  jr_000_035a
+    ld a, [hl]
+    and a
+    jr z, jr_000_035f
+
+jr_000_035a'=>operation:  jr_000_035f
+
+    dec [hl]
+
+
+jr_000_035f=>parallel:  jr_000_035f
+    inc l
+    dec b
+    jr nz, jr_000_035a
+
+jr_000_035f'=>parallel:  jr_000_035a
+
+    ldh a, [$c5]
+    and a
+    jr z, jr_000_036c
+
+jr_000_035f''=>operation:  jr_000_036c
+
+    ld a, $09
+    ldh [rIE], a
+
+
+jr_000_036c=>parallel:  jr_000_036c
+    ldh a, [$85]
+    and a
+    jr z, jr_000_036c
+
+jr_000_036c'=>operation:  jr_000_036c
+
+    xor a
+    ldh [$85], a
+    jp Jump_000_0343
+
+e=>end
+
+st->Jump_000_0150
+Jump_000_0150->Jump_000_028b
+Jump_000_028b->jr_000_0293
+jr_000_0293(path1, right)->jr_000_0293'
+jr_000_0293(path2, bottom)->jr_000_0293
+jr_000_0293'(path1, right)->jr_000_0293''
+jr_000_0293'(path2, bottom)->jr_000_0293
+jr_000_0293''->Jump_000_029a
+Jump_000_029a->jr_000_02b2
+jr_000_02b2(path1, right)->jr_000_02b2'
+jr_000_02b2(path2, bottom)->jr_000_02b2
+jr_000_02b2'->jr_000_02df
+jr_000_02df(path1, right)->jr_000_02df'
+jr_000_02df(path2, bottom)->jr_000_02df
+jr_000_02df'->jr_000_02ea
+jr_000_02ea(path1, right)->jr_000_02ea'
+jr_000_02ea(path2, bottom)->jr_000_02ea
+jr_000_02ea'(path1, right)->jr_000_02ea''
+jr_000_02ea'(path2, bottom)->jr_000_02ea
+jr_000_02ea''->jr_000_02f9
+jr_000_02f9(path1, right)->jr_000_02f9'
+jr_000_02f9(path2, bottom)->jr_000_02f9
+jr_000_02f9'(path1, right)->jr_000_02f9''
+jr_000_02f9'(path2, bottom)->jr_000_02f9
+jr_000_02f9''->jr_000_0305
+jr_000_0305(path1, right)->jr_000_0305'
+jr_000_0305(path2, bottom)->jr_000_0305
+jr_000_0305'->jr_000_030e
+jr_000_030e(path1, right)->jr_000_030e'
+jr_000_030e(path2, bottom)->jr_000_030e
+jr_000_030e'->jr_000_0319
+jr_000_0319(path1, right)->jr_000_0319'
+jr_000_0319(path2, bottom)->jr_000_0319
+jr_000_0319'->Jump_000_0343
+Jump_000_0343(path1, right)->Jump_000_0343'
+Jump_000_0343(path2, bottom)->Jump_000_029a
+Jump_000_0343'->jr_000_035a
+jr_000_035a(path1, right)->jr_000_035f
+jr_000_035a(path2, bottom)->jr_000_035a'
+jr_000_035a'->jr_000_035f
+jr_000_035f(path1, right)->jr_000_035f'
+jr_000_035f(path2, bottom)->jr_000_035a
+jr_000_035f'(path1, right)->jr_000_036c
+jr_000_035f'(path2, bottom)->jr_000_035f''
+jr_000_035f''->jr_000_036c
+jr_000_036c(path1, right)->jr_000_036c'
+jr_000_036c(path2, bottom)->jr_000_036c
+jr_000_036c'->Jump_000_0343
+Jump_000_0343->e

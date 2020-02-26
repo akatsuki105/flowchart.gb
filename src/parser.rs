@@ -159,8 +159,11 @@ impl Parser {
             "REPT" | "rept" | "ENDR" | "endr" => {
                 return (self.parse_text(), None, None);
             }
-            token::INCLUDE | token::INCBIN => {
+            token::INCLUDE => {
                 return self.parse_include(&tokens);
+            }
+            token::INCBIN => {
+                return (self.parse_text(), None, None);
             }
             t if opcode::DEFINE_LIST.contains(&&(t.to_ascii_uppercase())[..]) => {
                 return (self.parse_text(), None, None);
